@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 
-	"github.com/libp2p/go-libp2p-peer"
+	"github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/libp2p/go-libp2p-peer"
 	pb "github.com/libp2p/go-libp2p-pubsub/pb"
 )
 

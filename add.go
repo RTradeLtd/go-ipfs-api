@@ -8,7 +8,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/ipfs/go-ipfs-files"
+	"github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/ipfs/go-ipfs-files"
 )
 
 type object struct {

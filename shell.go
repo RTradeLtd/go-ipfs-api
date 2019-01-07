@@ -15,13 +15,13 @@ import (
 	"strings"
 	"time"
 
-	files "github.com/ipfs/go-ipfs-files"
+	files "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/ipfs/go-ipfs-files"
 	homedir "github.com/mitchellh/go-homedir"
-	ma "github.com/multiformats/go-multiaddr"
-	manet "github.com/multiformats/go-multiaddr-net"
-	tar "github.com/whyrusleeping/tar-utils"
+	ma "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/multiformats/go-multiaddr"
+	manet "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/multiformats/go-multiaddr-net"
+	tar "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/whyrusleeping/tar-utils"
 
-	p2pmetrics "github.com/libp2p/go-libp2p-metrics"
+	p2pmetrics "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/libp2p/go-libp2p-metrics"
 )
 
 const (
