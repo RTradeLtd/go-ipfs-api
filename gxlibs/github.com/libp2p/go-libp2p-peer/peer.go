@@ -7,8 +7,8 @@ import (
 	"fmt"
 
 	ic "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/libp2p/go-libp2p-crypto"
-	b58 "github.com/mr-tron/base58/base58"
 	mh "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/multiformats/go-multihash"
+	b58 "github.com/mr-tron/base58/base58"
 )
 
 var (

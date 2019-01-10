@@ -18,8 +18,8 @@ import (
 
 	pb "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/libp2p/go-libp2p-crypto/pb"
 
-	sha256 "github.com/minio/sha256-simd"
 	"github.com/gogo/protobuf/proto"
+	sha256 "github.com/minio/sha256-simd"
 )
 
 const (

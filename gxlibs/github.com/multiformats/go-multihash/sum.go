@@ -8,8 +8,8 @@ import (
 
 	blake2s "github.com/RTradeLtd/go-ipfs-api/gxlibs/golang.org/x/crypto/blake2s"
 	sha3 "github.com/RTradeLtd/go-ipfs-api/gxlibs/golang.org/x/crypto/sha3"
-	blake2b "github.com/minio/blake2b-simd"
 	keccak "github.com/gxed/hashland/keccakpg"
+	blake2b "github.com/minio/blake2b-simd"
 	sha256 "github.com/minio/sha256-simd"
 	murmur3 "github.com/spaolacci/murmur3"
 )
