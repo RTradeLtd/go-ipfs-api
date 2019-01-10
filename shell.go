@@ -16,10 +16,10 @@ import (
 	"time"
 
 	files "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/ipfs/go-ipfs-files"
-	homedir "github.com/mitchellh/go-homedir"
 	ma "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/multiformats/go-multiaddr"
 	manet "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/multiformats/go-multiaddr-net"
 	tar "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/whyrusleeping/tar-utils"
+	homedir "github.com/mitchellh/go-homedir"
 
 	p2pmetrics "github.com/RTradeLtd/go-ipfs-api/gxlibs/github.com/libp2p/go-libp2p-metrics"
 )
@@ -192,6 +192,15 @@ func (s *Shell) Unpin(path string) error {
 	return s.Request("pin/rm", path).
 		Option("recursive", true).
 		Exec(context.Background(), nil)
+}
+
+// PinUpdate is used to update one pin path to another followed by unpinning
+func (s *Shell) PinUpdate(fromPath, toPath string) (map[string][]string, error) {
+	var out map[string][]string
+	if err := s.Request("pin/update", fromPath, toPath).Exec(context.Background(), &out); err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 const (
