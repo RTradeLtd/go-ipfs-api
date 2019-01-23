@@ -33,7 +33,6 @@ const (
 
 type Shell struct {
 	url     string
-	token   string
 	httpcli *gohttp.Client
 }
 
