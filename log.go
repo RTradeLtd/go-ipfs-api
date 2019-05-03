@@ -21,6 +21,11 @@ func (l Logger) Next() (map[string]interface{}, error) {
 	return out, nil
 }
 
+// Close is used to close our reader
+func (l Logger) Close() error {
+	return l.r.Close()
+}
+
 // GetLogs is used to retrieve a parsable logger object
 func (s *Shell) GetLogs() (Logger, error) {
 	logURL := fmt.Sprintf("http://%s/api/v0/log/tail", s.url)
