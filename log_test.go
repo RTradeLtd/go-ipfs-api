@@ -1,10 +1,15 @@
 package shell
 
-import "testing"
+import (
+	"context"
+	"testing"
+)
 
 func Test_Logger(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 	sh := NewLocalShell()
-	logger, err := sh.GetLogs()
+	logger, err := sh.GetLogs(ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
