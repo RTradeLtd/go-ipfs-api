@@ -13,13 +13,15 @@ import (
 	"os"
 	"path"
 	"strings"
-	"time"
 
 	files "github.com/ipfs/go-ipfs-files"
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/ipfs/interface-go-ipfs-core"
+	"github.com/mitchellh/go-homedir"
 	ma "github.com/multiformats/go-multiaddr"
 	manet "github.com/multiformats/go-multiaddr-net"
-	tar "github.com/whyrusleeping/tar-utils"
+	"github.com/whyrusleeping/tar-utils"
+
+	"github.com/ipfs/go-ipfs-http-client"
 
 	p2pmetrics "github.com/libp2p/go-libp2p-metrics"
 )
@@ -32,8 +34,17 @@ const (
 )
 
 type Shell struct {
-	url     string
-	httpcli gohttp.Client
+	api iface.CoreAPI
+
+	// not set with NewApiShell
+	client *gohttp.Client
+	url    string
+}
+
+func NewApiShell(api iface.CoreAPI) *Shell {
+	return &Shell{
+		api: api,
+	}
 }
 
 func NewLocalShell() *Shell {
@@ -98,41 +109,19 @@ func NewShellWithClient(url string, c *gohttp.Client) *Shell {
 			url = host
 		}
 	}
-	var sh Shell
-	sh.url = url
-	sh.httpcli = *c
-	// We don't support redirects.
-	sh.httpcli.CheckRedirect = func(_ *gohttp.Request, _ []*gohttp.Request) error {
-		return fmt.Errorf("unexpected redirect")
-	}
-	return &sh
-}
 
-// WithAuthorization returns a Shell that sets the provided token to be used as
-// an Authorization header in API requests. For example:
-//
-//    resp, err := NewDirectShell(addr).
-//        WithAuthorization(token).
-//        Cat(hash)
-//
-func (s *Shell) WithAuthorization(token string) *Shell {
+	api, err := httpapi.NewURLApiWithClient(url, c)
+	if err != nil {
+		return &Shell{}
+	}
+
+	var client = *c // make a copy
+
 	return &Shell{
-		url: s.url,
-		httpcli: gohttp.Client{
-			Transport: newAuthenticatedTransport(s.httpcli.Transport, token),
-		},
-	}
-}
+		api: api,
 
-func (s *Shell) SetTimeout(d time.Duration) {
-	s.httpcli.Timeout = d
-}
-
-func (s *Shell) Request(command string, args ...string) *RequestBuilder {
-	return &RequestBuilder{
-		command: command,
-		args:    args,
-		shell:   s,
+		client: &client,
+		url:    url,
 	}
 }
 

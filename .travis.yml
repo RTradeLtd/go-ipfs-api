@@ -6,11 +6,12 @@ services:
 - docker
 env: GO111MODULE=on
 
-before_script:
-  - go vet ./...
-  - go build ./...
-  - go test -run xxxx ./...
-  - make testenv
+env:
+  global:
+    - GOTFLAGS="-race"
+    - IPFS_PATH=/tmp/ipfs
+  matrix:
+    - BUILD_DEPTYPE=gomod
 
 script:
  - go test -race -failfast -coverprofile=coverage.txt ./...
