@@ -15,13 +15,13 @@ import (
 	"strings"
 
 	files "github.com/ipfs/go-ipfs-files"
-	"github.com/ipfs/interface-go-ipfs-core"
+	iface "github.com/ipfs/interface-go-ipfs-core"
 	"github.com/mitchellh/go-homedir"
 	ma "github.com/multiformats/go-multiaddr"
 	manet "github.com/multiformats/go-multiaddr-net"
 	"github.com/whyrusleeping/tar-utils"
 
-	"github.com/ipfs/go-ipfs-http-client"
+	httpapi "github.com/ipfs/go-ipfs-http-client"
 
 	p2pmetrics "github.com/libp2p/go-libp2p-metrics"
 )
@@ -93,11 +93,27 @@ func NewShell(url string) *Shell {
 func NewDirectShell(url string) *Shell {
 	return &Shell{
 		url: url,
-		httpcli: gohttp.Client{
+		client: &gohttp.Client{
 			Transport: &gohttp.Transport{
 				Proxy:             gohttp.ProxyFromEnvironment,
 				DisableKeepAlives: true,
 			},
+		},
+	}
+}
+
+// WithAuthorization returns a Shell that sets the provided token to be used as
+// an Authorization header in API requests. For example:
+//
+//    resp, err := NewDirectShell(addr).
+//        WithAuthorization(token).
+//        Cat(hash)
+//
+func (s *Shell) WithAuthorization(token string) *Shell {
+	return &Shell{
+		url: s.url,
+		client: &gohttp.Client{
+			Transport: newAuthenticatedTransport(s.client.Transport, token),
 		},
 	}
 }
