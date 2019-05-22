@@ -8,7 +8,7 @@ import (
 func Test_Logger(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	sh := NewLocalShell()
+	sh := NewShell(shellUrl)
 	logger, err := sh.GetLogs(ctx)
 	if err != nil {
 		t.Fatal(err)
