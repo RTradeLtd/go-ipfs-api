@@ -115,11 +115,11 @@ func NewShellWithClient(url string, c *gohttp.Client) *Shell {
 //        WithAuthorization(token).
 //        Cat(hash)
 //
-func (s *Shell) WithAuthorization(token string) *Shell {
+func (s *Shell) WithAuthorization(token string, extraHeaders map[string]string) *Shell {
 	return &Shell{
 		url: s.url,
 		httpcli: gohttp.Client{
-			Transport: newAuthenticatedTransport(s.httpcli.Transport, token),
+			Transport: newAuthenticatedTransport(s.httpcli.Transport, token, extraHeaders),
 		},
 	}
 }

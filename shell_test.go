@@ -23,7 +23,9 @@ const (
 
 func TestAdd(t *testing.T) {
 	is := is.New(t)
-	s := NewShell(shellUrl)
+	s := NewShell(shellUrl).WithAuthorization("", map[string]string{
+		"X-Hold-Time": "1",
+	})
 
 	mhash, err := s.Add(bytes.NewBufferString("Hello IPFS Shell tests"))
 	is.Nil(err)
