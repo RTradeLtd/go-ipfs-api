@@ -21,7 +21,7 @@ import (
 	manet "github.com/multiformats/go-multiaddr-net"
 	tar "github.com/whyrusleeping/tar-utils"
 
-	p2pmetrics "github.com/libp2p/go-libp2p-metrics"
+	p2pmetrics "github.com/libp2p/go-libp2p-core/metrics"
 )
 
 const (
@@ -115,11 +115,11 @@ func NewShellWithClient(url string, c *gohttp.Client) *Shell {
 //        WithAuthorization(token).
 //        Cat(hash)
 //
-func (s *Shell) WithAuthorization(token string) *Shell {
+func (s *Shell) WithAuthorization(token string, extraHeaders map[string]string) *Shell {
 	return &Shell{
 		url: s.url,
 		httpcli: gohttp.Client{
-			Transport: newAuthenticatedTransport(s.httpcli.Transport, token),
+			Transport: newAuthenticatedTransport(s.httpcli.Transport, token, extraHeaders),
 		},
 	}
 }

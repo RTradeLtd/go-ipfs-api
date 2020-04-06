@@ -12,18 +12,20 @@ import (
 	"testing"
 	"time"
 
-	"github.com/RTradeLtd/go-ipfs-api/options"
+	"github.com/RTradeLtd/go-ipfs-api/v3/options"
 	"github.com/cheekybits/is"
 )
 
 const (
 	examplesHash = "QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv"
-	shellUrl     = "192.168.1.101:5001"
+	shellUrl     = "127.0.0.1:5001"
 )
 
 func TestAdd(t *testing.T) {
 	is := is.New(t)
-	s := NewShell(shellUrl)
+	s := NewShell(shellUrl).WithAuthorization("", map[string]string{
+		"X-Hold-Time": "1",
+	})
 
 	mhash, err := s.Add(bytes.NewBufferString("Hello IPFS Shell tests"))
 	is.Nil(err)
@@ -325,7 +327,7 @@ func TestDagPut(t *testing.T) {
 
 	c, err := s.DagPut(`{"x": "abc","y":"def"}`, "json", "cbor")
 	is.Nil(err)
-	is.Equal(c, "zdpuAt47YjE9XTgSxUBkiYCbmnktKajQNheQBGASHj3FfYf8M")
+	is.Equal(c, "bafyreidrm3r2k6vlxqp2fk47sboeycf7apddib47w7cyagrajtpaxxl2pi")
 }
 
 func TestDagPutWithOpts(t *testing.T) {
@@ -334,7 +336,7 @@ func TestDagPutWithOpts(t *testing.T) {
 
 	c, err := s.DagPutWithOpts(`{"x": "abc","y":"def"}`, options.Dag.Pin("true"))
 	is.Nil(err)
-	is.Equal(c, "zdpuAt47YjE9XTgSxUBkiYCbmnktKajQNheQBGASHj3FfYf8M")
+	is.Equal(c, "bafyreidrm3r2k6vlxqp2fk47sboeycf7apddib47w7cyagrajtpaxxl2pi")
 }
 
 func TestStatsBW(t *testing.T) {

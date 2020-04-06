@@ -1,10 +1,18 @@
 language: go
+
 sudo: required
+
 go:
-  - "1.12"
+  - "1.14.x"
+
 services:
 - docker
+
 env: GO111MODULE=on
+
+install:
+  - go mod download
+  - git submodule update --init
 
 before_script:
   - go vet ./...
@@ -20,3 +28,8 @@ after_success:
 
 notifications:
   email: false
+
+cache:
+  directories:
+    - $GOPATH/pkg/mod
+    - $HOME/.cache/go-build
