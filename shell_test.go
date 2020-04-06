@@ -18,7 +18,7 @@ import (
 
 const (
 	examplesHash = "QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv"
-	shellUrl     = "192.168.1.101:5001"
+	shellUrl     = "127.0.0.1:5001"
 )
 
 func TestAdd(t *testing.T) {
@@ -325,7 +325,7 @@ func TestDagPut(t *testing.T) {
 
 	c, err := s.DagPut(`{"x": "abc","y":"def"}`, "json", "cbor")
 	is.Nil(err)
-	is.Equal(c, "zdpuAt47YjE9XTgSxUBkiYCbmnktKajQNheQBGASHj3FfYf8M")
+	is.Equal(c, "bafyreidrm3r2k6vlxqp2fk47sboeycf7apddib47w7cyagrajtpaxxl2pi")
 }
 
 func TestDagPutWithOpts(t *testing.T) {
@@ -334,7 +334,7 @@ func TestDagPutWithOpts(t *testing.T) {
 
 	c, err := s.DagPutWithOpts(`{"x": "abc","y":"def"}`, options.Dag.Pin("true"))
 	is.Nil(err)
-	is.Equal(c, "zdpuAt47YjE9XTgSxUBkiYCbmnktKajQNheQBGASHj3FfYf8M")
+	is.Equal(c, "bafyreidrm3r2k6vlxqp2fk47sboeycf7apddib47w7cyagrajtpaxxl2pi")
 }
 
 func TestStatsBW(t *testing.T) {
