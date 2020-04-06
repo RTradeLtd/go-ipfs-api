@@ -11,4 +11,4 @@ require (
 	github.com/whyrusleeping/tar-utils v0.0.0-20180509141711-8c6c8ba81d5c
 )
 
-go 1.13
+go 1.14
